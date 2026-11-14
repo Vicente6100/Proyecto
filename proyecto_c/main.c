@@ -12,10 +12,10 @@ typedef struct{
     int release_year ;
     int seen ; //trabajado como booleano, es 0 o 1
     int times_seen ;
-    int calification ;
+    int rating ;
     char review[751] ;
     
-} Pelicula ;
+} tipoPelicula ;
 
 int is_equal_str(void *key1, void *key2){
     return strcmp( (char *)key1, (char *)key2 ) == 0 ;
@@ -34,7 +34,19 @@ void cargarCSV(Map *pelis_bytitle, Map *pelis_byyear ){
 
     char **campos ;
     campos = leer_linea_csv(archivo, ',') ;
-    
+    while ((campos = leer_linea_csv(archivo, ',')) != NULL){
+        tipoPelicula *pelicula = (tipoPelicula *)malloc(sizeof(tipoPelicula)) ;
+        pelicula->id = atoi(campos[1]) ; 
+        strcpy(pelicula->title, campos[3]) ;
+        pelicula->release_year = atoi(campos[4]) ;
+        pelicula->seen = atoi(campos[7]) ;
+        pelicula->times_seen = atoi(campos[9]) ;
+        pelicula->rating = atoi(campos[10]) ;
+        strcpy(pelicula->review, campos[11] ) :
+
+        
+
+    }
 }
 
 int main() {
