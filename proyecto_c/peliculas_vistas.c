@@ -1,4 +1,3 @@
-
 #include "peliculas_vistas.h"
 #include "pelicula.h"
 #include <stdio.h>
@@ -11,14 +10,11 @@ int compararTitulos(const char *titulo1, const char *titulo2) {
             tolower((unsigned char)*titulo2)) {
             return 0;
         }
-
         titulo1++;
         titulo2++;
     }
-
     return *titulo1 == '\0' && *titulo2 == '\0';
 }
-
 
 void imprimirPelicula(Pelicula *pelicula) {
     printf("\nTitulo: %s\n", pelicula->title);
@@ -29,7 +25,6 @@ void imprimirPelicula(Pelicula *pelicula) {
 }
 
 void mostrarPeliculasVistas(List *lista_ingreso) {
-
     int encontradas = 0;
 
     printf("\n===== PELICULAS VISTAS =====\n");
@@ -37,7 +32,6 @@ void mostrarPeliculasVistas(List *lista_ingreso) {
     Pelicula *pelicula = list_first(lista_ingreso);
 
     while (pelicula != NULL) {
-
         if (pelicula->seen == 1) {
             imprimirPelicula(pelicula);
             encontradas++;
@@ -51,9 +45,7 @@ void mostrarPeliculasVistas(List *lista_ingreso) {
     }
 }
 
-
 void consultarPeliculaVista(List *lista_ingreso) {
-
     char titulo[100];
 
     printf("\nIngrese el titulo de la pelicula: ");
@@ -65,14 +57,11 @@ void consultarPeliculaVista(List *lista_ingreso) {
     titulo[strcspn(titulo, "\n")] = '\0';
 
     int encontrada = 0;
-
     Pelicula *pelicula = list_first(lista_ingreso);
 
     while (pelicula != NULL) {
-
         if (pelicula->seen == 1 &&
             compararTitulos(pelicula->title, titulo)) {
-
             imprimirPelicula(pelicula);
             encontrada = 1;
         }
