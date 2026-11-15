@@ -27,7 +27,7 @@ void* heap_top(Heap* pq);
 /* Extrae y devuelve el elemento de mayor prioridad. */
 void* heap_pop(Heap* pq);
 
-/* Comprueba si el Heap está vacío. */
+/* Comprueba si el Heap esta vacio. */
 int heap_empty(Heap* pq);
 
 /* Libera la memoria interna del Heap. */

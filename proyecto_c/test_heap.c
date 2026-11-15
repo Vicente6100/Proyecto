@@ -10,8 +10,8 @@ int compararPeliculas(void* a, void* b) {
     Pelicula* p1 = a;
     Pelicula* p2 = b;
 
-    if (p1->calification > p2->calification) return 1;
-    if (p1->calification < p2->calification) return -1;
+    if (p1->rating > p2->rating) return 1;
+    if (p1->rating < p2->rating) return -1;
 
     if (p1->times_seen > p2->times_seen) return 1;
     if (p1->times_seen < p2->times_seen) return -1;
@@ -21,10 +21,10 @@ int compararPeliculas(void* a, void* b) {
 
 int main() {
 
-    Pelicula p1 = {.id = 1, .calification = 8, .times_seen = 2};
-    Pelicula p2 = {.id = 2, .calification = 10, .times_seen = 1};
-    Pelicula p3 = {.id = 3, .calification = 10, .times_seen = 3};
-    Pelicula p4 = {.id = 4, .calification = 9, .times_seen = 5};
+    Pelicula p1 = {.id = 1, .rating = 8, .times_seen = 2};
+    Pelicula p2 = {.id = 2, .rating = 10, .times_seen = 1};
+    Pelicula p3 = {.id = 3, .rating = 10, .times_seen = 3};
+    Pelicula p4 = {.id = 4, .rating = 9, .times_seen = 5};
 
     List* lista = list_create();
 
@@ -38,8 +38,7 @@ int main() {
     if (!heap_build(ranking, lista)) {
         printf("Error al construir el Heap.\n");
         heap_destroy(ranking);
-        list_clean(lista);
-        free(lista);
+        list_destroy(lista);
         return 1;
     }
 
@@ -54,7 +53,7 @@ int main() {
         printf("%d. ID: %d | Nota: %d | Veces vista: %d\n",
             posicion,
             pelicula->id,
-            pelicula->calification,
+            pelicula->rating,
             pelicula->times_seen
         );
 
@@ -65,8 +64,7 @@ int main() {
            list_size(lista));
 
     heap_destroy(ranking);
-    list_clean(lista);
-    free(lista);
+    list_destroy(lista);
 
     return 0;
 }

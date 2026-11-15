@@ -1,91 +1,114 @@
 #include "extra.h"
+#include <stdlib.h>
+#include <string.h>
 
-
-#define MAX_LINE_LENGTH 1024
-#define MAX_FIELDS 300
-
+/*
+ * Lee un registro CSV completo, aunque supere 1024 caracteres.
+ * Separa por el delimitador indicado y respeta campos entrecomillados
+ * y comillas escapadas ("").
+ * Los campos son validos hasta la siguiente llamada.
+ */
 char **leer_linea_csv(FILE *archivo, char separador) {
-  static char linea[MAX_LINE_LENGTH];
-  static char *campos[MAX_FIELDS];
-  char *ptr, *start;
-  int idx = 0;
+    static char *linea = NULL;
+    static size_t capacidad = 0;
+    static char *campos[300];
+    size_t largo = 0;
+    int ch;
 
-  if (fgets(linea, MAX_LINE_LENGTH, archivo) == NULL) {
-    return NULL; // No hay más líneas para leer
-  }
+    if (archivo == NULL) return NULL;
 
-  // Eliminar salto de linea
-  linea[strcspn(linea, "\n")] = '\0';
-
-  ptr = start = linea;
-  while (*ptr) {
-    if (idx >= MAX_FIELDS - 1)
-      break;
-
-    if (*ptr == '\"') { // Inicio de un campo entrecomillado
-      start = ++ptr;    // Saltar la comilla inicial
-      while (*ptr && !(*ptr == '\"' && *(ptr + 1) == separador))
-        ptr++;
-    } else { // Campo sin comillas
-      start = ptr;
-      while (*ptr && *ptr != separador)
-        ptr++;
+    while ((ch = fgetc(archivo)) != EOF) {
+        if (ch == '\n') break;
+        if (largo + 2 > capacidad) {
+            size_t nueva = capacidad ? capacidad * 2 : 2048;
+            char *tmp = realloc(linea, nueva);
+            if (tmp == NULL) return NULL;
+            linea = tmp;
+            capacidad = nueva;
+        }
+        linea[largo++] = (char)ch;
     }
 
-    if (*ptr) {
-      *ptr = '\0'; // Reemplazar comilla final o separador por terminación
-      ptr++;
-      if (*ptr == separador)
-        ptr++;
+    if (ch == EOF && largo == 0) return NULL;
+    if (largo > 0 && linea[largo - 1] == '\r') largo--;
+    linea[largo] = '\0';
+
+    size_t lectura = 0, escritura = 0;
+    int cantidad = 0;
+
+    while (1) {
+        if (cantidad >= 299) break;
+        campos[cantidad++] = &linea[escritura];
+
+        if (linea[lectura] == '"') {
+            lectura++;
+            while (linea[lectura] != '\0') {
+                if (linea[lectura] == '"') {
+                    if (linea[lectura + 1] == '"') {
+                        linea[escritura++] = '"';
+                        lectura += 2;
+                    } else {
+                        lectura++;
+                        break;
+                    }
+                } else {
+                    linea[escritura++] = linea[lectura++];
+                }
+            }
+            while (linea[lectura] != '\0' && linea[lectura] != separador)
+                lectura++;
+        } else {
+            while (linea[lectura] != '\0' && linea[lectura] != separador)
+                linea[escritura++] = linea[lectura++];
+        }
+
+        int hay_mas = (linea[lectura] == separador);
+        if (hay_mas) lectura++;
+        linea[escritura++] = '\0';
+
+        if (!hay_mas) break;
     }
 
-    // Quitar comilla final si existe
-    if (*(ptr - 2) == '\"') {
-      *(ptr - 2) = '\0';
-    }
-
-    campos[idx++] = start;
-  }
-
-  campos[idx] = NULL; // Marcar el final del array
-  return campos;
+    campos[cantidad] = NULL;
+    return campos;
 }
 
 List *split_string(const char *str, const char *delim) {
-  List *result = list_create();
-  char *token = strtok((char *)str, delim);
+    if (str == NULL || delim == NULL) return NULL;
+    List *result = list_create();
+    if (result == NULL) return NULL;
 
-  while (token != NULL) {
-    // Eliminar espacios en blanco al inicio del token
-    while (*token == ' ') {
-      token++;
+    char *copia = malloc(strlen(str) + 1);
+    if (copia == NULL) return result;
+    strcpy(copia, str);
+
+    char *token = strtok(copia, delim);
+    while (token != NULL) {
+        while (*token == ' ') token++;
+        size_t n = strlen(token);
+        while (n > 0 && token[n - 1] == ' ') token[--n] = '\0';
+
+        char *nuevo = malloc(n + 1);
+        if (nuevo == NULL) break;
+        memcpy(nuevo, token, n + 1);
+        list_pushBack(result, nuevo);
+        token = strtok(NULL, delim);
     }
 
-    // Eliminar espacios en blanco al final del token
-    char *end = token + strlen(token) - 1;
-    while (*end == ' ' && end > token) {
-      *end = '\0';
-      end--;
-    }
-
-    // Copiar el token en un nuevo string
-    char *new_token = strdup(token);
-
-    // Agregar el nuevo string a la lista
-    list_pushBack(result, new_token);
-
-    // Obtener el siguiente token
-    token = strtok(NULL, delim);
-  }
-
-  return result;
+    free(copia);
+    return result;
 }
 
-// Función para limpiar la pantalla
-void limpiarPantalla() { system("clear"); }
+void limpiarPantalla(void) {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
 
-void presioneTeclaParaContinuar() {
-  puts("Presione una tecla para continuar...");
-  getchar(); // Consume el '\n' del buffer de entrada
-  getchar(); // Espera a que el usuario presione una tecla
+void presioneTeclaParaContinuar(void) {
+    printf("Presione Enter para continuar...");
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
 }

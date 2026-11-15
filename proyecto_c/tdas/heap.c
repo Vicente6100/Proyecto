@@ -18,7 +18,7 @@ struct Heap {
     int (*compare)(void*, void*);
 };
 
-/* Compara dos elementos considerando su prioridad y orden de inserción. */
+/* Compara dos elementos considerando su prioridad y orden de insercion. */
 static int higher_priority(Heap* pq, HeapElem a, HeapElem b) {
 
     int result = pq->compare(a.data, b.data);
@@ -38,7 +38,7 @@ static void swap(HeapElem* a, HeapElem* b) {
     *b = temp;
 }
 
-/* Aumenta la capacidad del arreglo dinámico. */
+/* Aumenta la capacidad del arreglo dinamico. */
 static int resize_heap(Heap* pq) {
 
     size_t new_capacity;
@@ -73,7 +73,7 @@ static int resize_heap(Heap* pq) {
     return 1;
 }
 
-/* Flotación: mueve un elemento hacia la raíz. */
+/* Flotacion: mueve un elemento hacia la raiz. */
 static void sift_up(Heap* pq, size_t index) {
 
     while (index > 0) {
@@ -136,7 +136,7 @@ static void sift_down(Heap* pq, size_t index) {
     }
 }
 
-/* Crea un Heap vacío. */
+/* Crea un Heap vacio. */
 Heap* heap_create(int (*compare)(void*, void*)) {
 
     if (compare == NULL) {
@@ -247,7 +247,7 @@ int heap_build(Heap* pq, List* lista) {
     pq->capacity = n;
     pq->next_order = n;
 
-    /* Construcción de abajo hacia arriba mediante Floyd. */
+    /* Construccion de abajo hacia arriba mediante Floyd. */
     if (pq->size > 1) {
 
         for (size_t i = pq->size / 2; i > 0; i--) {
@@ -289,7 +289,7 @@ void* heap_pop(Heap* pq) {
     return result;
 }
 
-/* Comprueba si el Heap está vacío. */
+/* Comprueba si el Heap esta vacio. */
 int heap_empty(Heap* pq) {
 
     return pq == NULL || pq->size == 0;
