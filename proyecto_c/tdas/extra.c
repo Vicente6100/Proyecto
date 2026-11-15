@@ -1,7 +1,7 @@
 #include "extra.h"
 
 
-#define MAX_LINE_LENGTH 1024
+#define MAX_LINE_LENGTH 4096
 #define MAX_FIELDS 300
 
 char **leer_linea_csv(FILE *archivo, char separador) {
