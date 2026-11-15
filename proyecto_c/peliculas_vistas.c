@@ -1,3 +1,4 @@
+
 #include "peliculas_vistas.h"
 #include "pelicula.h"
 #include <stdio.h>
@@ -17,11 +18,11 @@ int compararTitulos(const char *titulo1, const char *titulo2) {
 }
 
 void imprimirPelicula(Pelicula *pelicula) {
-    printf("\nTitulo: %s\n", pelicula->title);
-    printf("Ano: %d\n", pelicula->release_year);
-    printf("Veces vista: %d\n", pelicula->times_seen);
-    printf("Calificacion: %d\n", pelicula->calification);
-    printf("Resena: %s\n", pelicula->review);
+    printf("\nTitulo: %s\n", pelicula->titulo);
+    printf("Ano: %d\n", pelicula->ano);
+    printf("Veces vista: %d\n", pelicula->veces_vista);
+    printf("Calificacion: %.1f\n", pelicula->calificacion);
+    printf("Resena: %s\n", pelicula->resena);
 }
 
 void mostrarPeliculasVistas(List *lista_ingreso) {
@@ -32,7 +33,7 @@ void mostrarPeliculasVistas(List *lista_ingreso) {
     Pelicula *pelicula = list_first(lista_ingreso);
 
     while (pelicula != NULL) {
-        if (pelicula->seen == 1) {
+        if (pelicula->vista == 1) {
             imprimirPelicula(pelicula);
             encontradas++;
         }
@@ -60,8 +61,8 @@ void consultarPeliculaVista(List *lista_ingreso) {
     Pelicula *pelicula = list_first(lista_ingreso);
 
     while (pelicula != NULL) {
-        if (pelicula->seen == 1 &&
-            compararTitulos(pelicula->title, titulo)) {
+        if (pelicula->vista == 1 &&
+            compararTitulos(pelicula->titulo, titulo)) {
             imprimirPelicula(pelicula);
             encontrada = 1;
         }
