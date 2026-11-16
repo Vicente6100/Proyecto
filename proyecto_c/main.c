@@ -1,89 +1,41 @@
-#include "tdas/extra.h"
-#include "tdas/list.h"
+#include "menu.h"
 #include "tdas/map.h"
+#include "tdas/list.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
-typedef struct{
-    int id ;
-    char title[100] ;
-    int release_year ;
-    int seen ; //trabajado como booleano, es 0 o 1
-    int times_seen ;
-    int rating ;
-    char review[751] ;
-    
-} tipoPelicula ;
-
-int is_equal_str(void *key1, void *key2){
-    return strcmp( (char *)key1, (char *)key2 ) == 0 ;
+static int igualesTexto(void *a, void *b) {
+    return strcmp((const char *)a, (const char *)b) == 0;
 }
 
-int is_equal_int(void *key1, void *key2){
-    return *(int *)key1 == *(int *)key2;
+static unsigned long hashTexto(void *clave) {
+    const unsigned char *s = (const unsigned char *)clave;
+    unsigned long hash = 5381;
+    while (*s) hash = ((hash << 5) + hash) + *s++;
+    return hash;
 }
 
-FILE* abrirCSV(const char *nombre_csv, const char *modo){
-    FILE *archivo = fopen(nombre_csv, modo) ;
-    if (archivo == NULL ){
-        perror("Error al abrir el CSV "%s" ", nombre_csv ) ;
-        exit(1) ;
+static int menorEntero(void *a, void *b) {
+    return *(const int *)a < *(const int *)b;
+}
+
+int main(void) {
+    Map *pelis_bytitle = map_create_hash(igualesTexto, hashTexto);
+    Map *pelis_byyear = sorted_map_create(menorEntero);
+    List *lista_ingreso = list_create();
+
+    if (!pelis_bytitle || !pelis_byyear || !lista_ingreso) {
+        fprintf(stderr, "No se pudo reservar memoria para iniciar.\n");
+        map_destroy(pelis_bytitle);
+        map_destroy(pelis_byyear);
+        list_destroy(lista_ingreso);
+        return 1;
     }
-    return archivo ;
-}
 
-void cargarCSV(Map *pelis_bytitle, Map *pelis_byyear ){
-    const char nombre_csv = "CSVpeliculas.csv" ;
-    const char modo = "r" ;
-    archivo = abrirCSV(nombre_csv, modo) ;
+    ejecutarMenu(pelis_bytitle, pelis_byyear, lista_ingreso);
 
-    char **campos ;
-    campos = leer_linea_csv(archivo, ',') ;
-    while ((campos = leer_linea_csv(archivo, ',')) != NULL){
-        tipoPelicula *pelicula = (tipoPelicula *)malloc(sizeof(tipoPelicula)) ;
-        pelicula->id = atoi(campos[1]) ; 
-        strcpy(pelicula->title, campos[3]) ;
-        pelicula->release_year = atoi(campos[4]) ;
-        pelicula->seen = atoi(campos[7]) ;
-        pelicula->times_seen = atoi(campos[9]) ;
-        pelicula->rating = atoi(campos[10]) ;
-        strcpy(pelicula->review, campos[11] ) :
-
-        MapPair *title_pair = map_search(pelis_bytitle, pelicula->title) ;
-        if (title_pair == NULL){
-            List *nueva_lista = list_create() ;
-            list_pushBack(nueva_lista, pelicula) ;
-            map_insert(pelis_bytitle, pelicula->title, nueva_lista) ;
-        }
-        else{
-            List *title_list = (List *) title_pair->value;
-            list_pushBack(title_list, pelicula) ;
-        }
-
-        Map *year_pair = map_search(pelis_byyear, pelicula->year) ;
-        if (title_pair == NULL){
-            List *nueva_lista = list_create() ;
-            list_pushBack(nueva_lista, pelicula) ;
-            map_insert(pelis_byyear, pelicula->year, nueva_lista) ;
-        }
-        else{
-            List *year_list = (List *) year_pair->value;
-            list_pushBack(year_list, pelicula) ;
-        }
-
-        fclose(archivo)
-
-    }
-    printf("El archivo fue cargado con éxito") ;
-}
-
-int main() {
-    //char opcion ;
-
-    Map *pelis_bytitle = map_create(is_equal_str) ;
-    Map *pelis_byyear = sorted_map_create(is_equal_int) ;
-    cargarCSV(pelis_bytitle, pelis_byyear) ; 
+    map_destroy(pelis_bytitle);
+    map_destroy(pelis_byyear);
+    list_destroy(lista_ingreso);
     return 0;
-}   
+}

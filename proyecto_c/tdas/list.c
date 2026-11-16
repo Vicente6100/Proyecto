@@ -19,7 +19,7 @@ typedef List List;
 List *list_create() {
   List *newList = (List *)malloc(sizeof(List));
   if (newList == NULL) {
-    return NULL; // Fallo en la asignación de memoria
+    return NULL; // Fallo en la asignacion de memoria
   }
   newList->head = NULL;
   newList->tail = NULL;
@@ -30,7 +30,7 @@ List *list_create() {
 
 void *list_first(List *L) {
   if (L == NULL || L->head == NULL) {
-    return NULL; // Lista vacía o no inicializada
+    return NULL; // Lista vacia o no inicializada
   }
   L->current = L->head;
   return L->current->data;
@@ -38,7 +38,7 @@ void *list_first(List *L) {
 
 void *list_next(List *L) {
   if (L == NULL || L->current == NULL || L->current->next == NULL) {
-    return NULL; // Lista vacía, no inicializada o no hay más elementos
+    return NULL; // Lista vacia, no inicializada o no hay mas elementos
   }
   L->current = L->current->next;
   return L->current->data;
@@ -50,12 +50,12 @@ void list_pushFront(List *L, void *data) {
   }
   Node *newNode = (Node *)malloc(sizeof(Node));
   if (newNode == NULL) {
-    return; // Fallo en la asignación de memoria
+    return; // Fallo en la asignacion de memoria
   }
   newNode->data = data;
   newNode->next = L->head;
   L->head = newNode;
-  if (L->tail == NULL) { // Si la lista estaba vacía
+  if (L->tail == NULL) { // Si la lista estaba vacia
     L->tail = newNode;
   }
   L->size++;
@@ -67,11 +67,11 @@ void list_pushBack(List *L, void *data) {
   }
   Node *newNode = (Node *)malloc(sizeof(Node));
   if (newNode == NULL) {
-    return; // Fallo en la asignación de memoria
+    return; // Fallo en la asignacion de memoria
   }
   newNode->data = data;
   newNode->next = NULL;
-  if (L->tail == NULL) { // Si la lista está vacía
+  if (L->tail == NULL) { // Si la lista esta vacia
     L->head = newNode;
     L->tail = newNode;
   } else {
@@ -83,11 +83,11 @@ void list_pushBack(List *L, void *data) {
 
 void list_pushCurrent(List *L, void *data) {
   if (L == NULL || L->current == NULL) {
-    return; // Lista no inicializada o current no está definido
+    return; // Lista no inicializada o current no esta definido
   }
   Node *newNode = (Node *)malloc(sizeof(Node));
   if (newNode == NULL) {
-    return; // Fallo en la asignación de memoria
+    return; // Fallo en la asignacion de memoria
   }
   newNode->data = data;
   newNode->next = L->current->next;
@@ -104,13 +104,13 @@ void list_sortedInsert(List *L, void *data,
     return; // Lista no inicializada
   }
 
-  // Caso especial: inserción al principio o en lista vacía
+  // Caso especial: insercion al principio o en lista vacia
   if (L->head == NULL || lower_than(data, L->head->data)) {
     list_pushFront(L, data);
     return;
   }
 
-  // Caso general: encontrar la posición correcta para insertar
+  // Caso general: encontrar la posicion correcta para insertar
   Node *current = L->head;
   while (current->next != NULL && !lower_than(data, current->next->data)) {
     current = current->next;
@@ -119,18 +119,18 @@ void list_sortedInsert(List *L, void *data,
   // Preparar para usar list_pushCurrent
   L->current = current;
 
-  // Insertar el nodo en la posición actual
+  // Insertar el nodo en la posicion actual
   list_pushCurrent(L, data);
 }
 
 void *list_popFront(List *L) {
   if (L == NULL || L->head == NULL) {
-    return NULL; // Lista vacía o no inicializada
+    return NULL; // Lista vacia o no inicializada
   }
   Node *temp = L->head;
   L->head = L->head->next;
   if (L->head == NULL) {
-    L->tail = NULL; // La lista ahora está vacía
+    L->tail = NULL; // La lista ahora esta vacia
   }
   void *data = temp->data;
   free(temp);
@@ -140,7 +140,7 @@ void *list_popFront(List *L) {
 
 void *list_popBack(List *L) {
   if (L == NULL || L->head == NULL) {
-    return NULL; // Lista vacía o no inicializada
+    return NULL; // Lista vacia o no inicializada
   }
   if (L->head == L->tail) { // Solo un elemento en la lista
     return list_popFront(L);
@@ -158,7 +158,7 @@ void *list_popBack(List *L) {
 }
 
 int list_size(List *L){
-    return L->size;
+    return L == NULL ? 0 : L->size;
 }
 
 void *list_popCurrent(List *L) {
@@ -175,7 +175,7 @@ void *list_popCurrent(List *L) {
 
   temp->next = L->current->next;
   if (L->current == L->tail) {
-    L->tail = temp; // Actualizar tail si se elimina el último elemento
+    L->tail = temp; // Actualizar tail si se elimina el ultimo elemento
   }
   void *data = L->current->data;
   free(L->current);
@@ -199,4 +199,10 @@ void list_clean(List *L) {
   L->tail = NULL;
   L->current = NULL;
   L->size = 0;
+}
+
+void list_destroy(List *L) {
+  if (L == NULL) return;
+  list_clean(L);
+  free(L);
 }
