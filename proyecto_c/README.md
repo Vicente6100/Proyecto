@@ -89,7 +89,7 @@ PASO 2: Interactuar con el primer menú
       Resena: Not reviewed
     ```
     -Opción 0: volver
-    PASO 2.3 Registrar película
+    PASO 2.3: Registrar película
     -Se selecciona la opción 3: Registrar pelicula
       -Se ingresa el nombre de la película: Iron Man
       -Se selecciona la opción 1: Marcar como vista
@@ -103,7 +103,9 @@ PASO 2: Interactuar con el primer menú
         Calificacion: 10/10
         Total de peliculas vistas: 1
     ```
-      -
+      -Opción 4: salir
+    PASO 2.4: Cerrar el programa
+    -En el menú principal se selecciona la opción 4 y el programa finaliza su ejecucion. Todos los cambios son guardados.
 
 
 
