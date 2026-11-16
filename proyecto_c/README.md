@@ -57,7 +57,7 @@ El programa trabaja con 12 columnas separadas por punto y coma:
 La lectura respeta campos entrecomillados y comillas dobles escapadas. Las columnas originales que no modifica el registro de peliculas se conservan al guardar.
 
 
-##EJEMPLO DE USO
+## EJEMPLO DE USO
 
 PASO 1: Iniciar aplicación 
   -Se abre la carpeta proyecto_c en una terminal
@@ -78,11 +78,11 @@ PASO 2: interactuar con el primer menú
     - Opción 1: Buscar por nombre
       -Se escribe el nombre de la película: Iron Man
       ```powershell
-  ID: 1726
-Titulo: Iron Man
-Ano: 2008
-Estado: Pendiente
-Veces vista: 0
-Calificacion: Sin calificar
-Resena: Not reviewed
-```
+      ID: 1726
+      Titulo: Iron Man
+      Año: 2008
+      Estado: Pendiente
+      Veces vista: 0
+      Calificacion: Sin calificar
+      Resena: Not reviewed
+  ```
