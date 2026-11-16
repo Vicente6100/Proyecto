@@ -71,10 +71,14 @@ PASO 1: Iniciar aplicación
 ```
 
 PASO 2: Interactuar con el primer menú
+
   PASO 2.1: Cargar CSV
+  
   - Se selecciona la opción 1: Preparar CSV
     -Se presiona la tecla Enter
+    
   PASO 2.2: Buscar una película
+
   - Se selecciona la opción 2: Buscar película
   -Se abre el submenú
     - Opción 1: Buscar por nombre
@@ -89,13 +93,17 @@ PASO 2: Interactuar con el primer menú
       Resena: Not reviewed
     ```
     -Opción 0: volver
+    
     PASO 2.3: Registrar película
+    
     -Se selecciona la opción 3: Registrar pelicula
       -Se ingresa el nombre de la película: Iron Man
       -Se selecciona la opción 1: Marcar como vista
       -Se selecciona la opción 2: Puntuar película
       -Se selecciona la opción 4: Salir
+    
     PASO 2.4 Consultar películas vistas
+    
     -Se selecciona la opción 4
       - Se selecciona la opción 2: Ver todas las peliculas vistas
       ```powershell
@@ -104,7 +112,9 @@ PASO 2: Interactuar con el primer menú
         Total de peliculas vistas: 1
     ```
       -Opción 4: salir
+    
     PASO 2.4: Cerrar el programa
+    
     -En el menú principal se selecciona la opción 4 y el programa finaliza su ejecucion. Todos los cambios son guardados.
 
 
