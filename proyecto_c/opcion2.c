@@ -108,8 +108,8 @@ static void mostrar_ficha(const Pelicula *p)
     printf("Título:       %s\n", p->title);
     printf("Año:          %d\n", p->release_year);
 
-    if (p->calification > 0) {
-        printf("Calificación: %d/10\n", p->calification);
+    if (p->rating > 0) {
+        printf("Calificación: %d/10\n", p->rating);
     } else {
         printf("Calificación: sin calificar\n");
     }
