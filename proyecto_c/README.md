@@ -58,12 +58,31 @@ La lectura respeta campos entrecomillados y comillas dobles escapadas. Las colum
 
 
 ##EJEMPLO DE USO
-Paso 1: Iniciar aplicación 
+
+PASO 1: Iniciar aplicación 
   -Se abre la carpeta proyecto_c en una terminal
   -Se ejecuta el comando 
   ```powershell
   gcc -Wall -Wextra -std=c11 main.c menu.c topk.c tdas/heap.c tdas/extra.c tdas/list.c tdas/map.c -o programa.exe
 ```
-  -Se ejecuta el comando ```powershell
+  -Se ejecuta el comando 
+  ```powershell
   .\programa.exe
+```
+
+PASO 2: interactuar con el primer menú
+  - Se selecciona la opción 1: Preparar CSV
+    -Se presiona la tecla Enter
+  - Se selecciona la opción 2: Buscar película
+  Se abre el submenú
+    - Opción 1: Buscar por nombre
+      -Se escribe el nombre de la película: Iron Man
+      ```powershell
+  ID: 1726
+Titulo: Iron Man
+Ano: 2008
+Estado: Pendiente
+Veces vista: 0
+Calificacion: Sin calificar
+Resena: Not reviewed
 ```
