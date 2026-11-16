@@ -51,6 +51,18 @@ gcc -Wall -Wextra -std=c11 test_heap.c tdas/heap.c tdas/list.c -o test_heap.exe
 
 El programa trabaja con 12 columnas separadas por punto y coma:
 
+
+##EJEMPLO DE USO
+Paso 1: Iniciar aplicación 
+  -Se abre la carpeta proyecto_c en una terminal
+  -Se ejecuta el comando 
+  ```powershell
+  gcc -Wall -Wextra -std=c11 main.c menu.c topk.c tdas/heap.c tdas/extra.c tdas/list.c tdas/map.c -o programa.exe
+```
+  -Se ejecuta el comando ```powershell
+  .\programa.exe
+  ```
+
 `Column1;id;title;overview;release_year;popularity;vote_average;vote_count;seen;times_seen;rating;review`
 
 La lectura respeta campos entrecomillados y comillas dobles escapadas. Las columnas originales que no modifica el registro de peliculas se conservan al guardar.
