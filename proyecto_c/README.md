@@ -70,14 +70,16 @@ PASO 1: Iniciar aplicación
   .\programa.exe
 ```
 
-PASO 2: interactuar con el primer menú
+PASO 2: Interactuar con el primer menú
+  PASO 2.1: Cargar CSV
   - Se selecciona la opción 1: Preparar CSV
     -Se presiona la tecla Enter
+  PASO 2.2: Buscar una película
   - Se selecciona la opción 2: Buscar película
-  Se abre el submenú
+  -Se abre el submenú
     - Opción 1: Buscar por nombre
       -Se escribe el nombre de la película: Iron Man
-      ```powershell
+    ```powershell
       ID: 1726
       Titulo: Iron Man
       Año: 2008
@@ -85,4 +87,24 @@ PASO 2: interactuar con el primer menú
       Veces vista: 0
       Calificacion: Sin calificar
       Resena: Not reviewed
-  ```
+    ```
+    -Opción 0: volver
+    PASO 2.3 Registrar película
+    -Se selecciona la opción 3: Registrar pelicula
+      -Se ingresa el nombre de la película: Iron Man
+      -Se selecciona la opción 1: Marcar como vista
+      -Se selecciona la opción 2: Puntuar película
+      -Se selecciona la opción 4: Salir
+    PASO 2.4 Consultar películas vistas
+    -Se selecciona la opción 4
+      - Se selecciona la opción 2: Ver todas las peliculas vistas
+      ```powershell
+        Iron Man (2008) | Calificada | Veces vista: 1
+        Calificacion: 10/10
+        Total de peliculas vistas: 1
+    ```
+      -
+
+
+
+
