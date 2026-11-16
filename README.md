@@ -42,3 +42,5 @@ El proyecto implementa Tipos de Datos Abstractos (TDAs) modulares ubicados en la
 | **Mapa de Años** | Multimapa (Tabla Hash + Listas) | Agrupación y búsqueda de películas por año de lanzamiento. |
 | **Lista de Ingreso** | Lista doblemente enlazada | Conserva el orden original del CSV para recorridos y guardado. |
 | **Heap de Ranking** | Max-Heap sobre arreglo dinámico | Extracción eficiente de las k películas mejor calificadas en O(k \log C). |
+
+##Dentro de la propia carpeta "proyecto_c" hay un README que detalla el uso de la aplicación 
